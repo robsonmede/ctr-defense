@@ -20,7 +20,7 @@ Criar o banco inicial
 python seed_database.py
 
 Iniciar a aplicação
-treamlit run appv12.py
+streamlit run appv12.py
 
 A aplicação será disponibilizada normalmente em:
 http://localhost:8501
@@ -55,9 +55,7 @@ nano .env
 
 python seed_database.py
 
-streamlit run appv12.py \
-  --server.address 0.0.0.0 \
-  --server.port 8501
+streamlit run appv12.py --server.address 0.0.0.0 --server.port 8501
 --------------------------------------------------------------------------------
 
 Criar backup:
