@@ -28,3 +28,8 @@ ctr-defense/
 └── .github/
     └── workflows/
         └── python-check.yml
+
+
+# Install
+
+cp .env.example .env
