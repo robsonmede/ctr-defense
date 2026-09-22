@@ -10,8 +10,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY appv12.py .
 
 EXPOSE 8501
 
 CMD ["streamlit", "run", "appv12.py", "--server.address=0.0.0.0", "--server.port=8501"]
+
