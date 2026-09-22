@@ -4,22 +4,32 @@ services:
     container_name: ctr-defense-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ctr_defense
-      POSTGRES_USER: ctr_user
-      POSTGRES_PASSWORD: ctr_senha_altere
+      POSTGRES_DB: ${POSTGRES_DB:-ctr_defense}
+      POSTGRES_USER: ${POSTGRES_USER:-ctr_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ctr_senha}
     ports:
       - "5432:5432"
     volumes:
       - ctr_defense_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -U ctr_user -d ctr_defense"
-        ]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ctr_user} -d ${POSTGRES_DB:-ctr_defense}"]
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 20
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ctr-defense-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8501:8501"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   ctr_defense_pgdata:
