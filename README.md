@@ -1,5 +1,21 @@
 # ctr-defense
 
+docker compose run --rm app python seed_database.py
+
+docker compose up -d postgres
+docker compose run --rm app python seed_database.py
+docker compose up -d app
+
+Isso significa que o seed_database.py já foi executado. Ele não duplicará a organização inicial.
+
+Para apagar completamente o banco e recriá-lo:
+
+docker compose down -v
+docker compose up -d postgres
+docker compose run --rm app python seed_database.py
+docker compose up -d app
+
+
 # Install
 
 python3 -m venv .venv
