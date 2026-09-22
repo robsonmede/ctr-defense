@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: ctr-defense-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ctr_defense
+      POSTGRES_USER: ctr_user
+      POSTGRES_PASSWORD: ctr_senha_altere
+    ports:
+      - "5432:5432"
+    volumes:
+      - ctr_defense_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ctr_user -d ctr_defense"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ctr_defense_pgdata:
